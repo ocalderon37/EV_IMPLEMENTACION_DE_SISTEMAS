@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `redsocial` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `redsocial`;
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: redsocial
 -- ------------------------------------------------------
--- Server version	8.0.30
+-- Server version	8.0.46
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -400,19 +400,19 @@ DROP TABLE IF EXISTS `proveedor`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `proveedor` (
   `idProveedor` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `dni` varchar(45) NOT NULL,
-  `fechaRegistro` datetime NOT NULL,
-  `fechaActualizacion` datetime DEFAULT NULL,
-  `idTipo` int NOT NULL,
-  `idPais` int DEFAULT NULL,
-  `estado` int DEFAULT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `ruc` char(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `direccion` varchar(150) NOT NULL,
+  `contacto` varchar(100) DEFAULT NULL,
+  `paginaWeb` varchar(150) DEFAULT NULL,
+  `fechaRegistro` date NOT NULL,
+  `idTipoProveedor` int DEFAULT NULL,
   PRIMARY KEY (`idProveedor`),
-  KEY `fk_proveedor_tipo_idx` (`idTipo`),
-  KEY `fk_proveedor_pais_idx` (`idPais`),
-  CONSTRAINT `fk_proveedor_pais` FOREIGN KEY (`idPais`) REFERENCES `pais` (`idPais`),
-  CONSTRAINT `fk_proveedor_tipo` FOREIGN KEY (`idTipo`) REFERENCES `tipo` (`idTipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+  KEY `fk_tipo_proveedor` (`idTipoProveedor`),
+  CONSTRAINT `fk_tipo_proveedor` FOREIGN KEY (`idTipoProveedor`) REFERENCES `tipo_proveedor` (`idTipoProveedor`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,32 +421,32 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES (1,'Luis Quispe','1452635','2023-10-12 20:05:05','2023-10-12 20:05:05',1,1,1),(2,'Sede Norte','40228588','2023-04-15 00:00:00','2023-10-12 20:05:05',1,2,1),(12,'Sede Norte2','40228533','2023-10-21 12:59:24','2023-10-21 12:59:24',2,3,1),(13,'aasasa s asa s','12345678','2026-06-10 22:35:52','2026-06-10 22:35:52',1,3,1),(14,'aaaaaa','12345673','2026-06-10 22:36:06','2026-06-10 22:36:06',2,4,1),(15,'sasasa','12345677','2026-06-10 22:37:54','2026-06-10 22:37:54',2,1,1),(16,'cvcvc','74859612','2026-06-10 22:41:52','2026-06-10 22:41:52',1,3,1);
+INSERT INTO `proveedor` VALUES (1,'TecnoS.A.','20100001234','contacto@tecnosa.com','987654321','Av. Javier Prado 123','Carlos Mendoza','www.tecnosa.com','2026-01-15',1),(2,'GlobalImports','20200005678','ventas@global.com','912345678','Calle Los Pinos 456','Ana María Torres','www.globalimports.com','2026-01-20',2),(3,'ComercialAndina','20300009876','info@andina.com','923456789','Jr. Gamarra 789','Jorge Quispe','www.comercialandina.pe','2026-02-01',3),(4,'InversionesLima','20400001111','lima@inversiones.com','934567890','Av. Arequipa 1011','Lucía Ramos','www.inversioneslima.com','2026-02-05',1),(5,'MegaDistribuidora','20500002222','mega@distribuidora.com','945678901','Carretera Central Km 5','Roberto Sánchez','www.megadistribuidora.com','2026-02-10',3),(6,'EximTrading','20600003333','contact@exim.com','956789012','Av. Colonial 432','David Wong','www.eximtrading.com','2026-02-12',2),(7,'SolucionesDigitales','20700004444','soporte@soldigital.com','967890123','Calle Las Flores 89','Sofía Benítez','www.soldigital.com','2026-02-15',1),(8,'ImportacionesSur','20800005555','ventas@impsur.com','978901234','Av. Grau 555','Miguel Ángel Ruiz','www.impsur.pe','2026-02-18',2),(9,'ProveedoraNorte','20900006666','contacto@pnorte.com','989012345','Panamericana Norte Km 20','Carmen Rosa Díaz','www.proveedoranorte.com','2026-02-20',1),(10,'GlobalExpress','20110007777','express@global.com','990123456','Av. Universitaria 1800','Fernando Castro','www.globalexpress.com','2026-02-22',2),(11,'Tecnología e Innovación SAC','20120008888','ventas@tecnoinnovacion.com','911223344','Av. La Marina 2000','Patricia Morales','www.tecnoinnovacion.com','2026-10-04',1),(12,'Carvitech','20012585654','carvitech@tech.com','553668114','Av la Florida 154, Surco','Carlos Perez','www, carvitech','2026-10-04',2);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipo`
+-- Table structure for table `tipo_proveedor`
 --
 
-DROP TABLE IF EXISTS `tipo`;
+DROP TABLE IF EXISTS `tipo_proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo` (
-  `idTipo` int NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idTipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `tipo_proveedor` (
+  `idTipoProveedor` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) NOT NULL,
+  PRIMARY KEY (`idTipoProveedor`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tipo`
+-- Dumping data for table `tipo_proveedor`
 --
 
-LOCK TABLES `tipo` WRITE;
-/*!40000 ALTER TABLE `tipo` DISABLE KEYS */;
-INSERT INTO `tipo` VALUES (1,'Nacional'),(2,'Extranjero');
-/*!40000 ALTER TABLE `tipo` ENABLE KEYS */;
+LOCK TABLES `tipo_proveedor` WRITE;
+/*!40000 ALTER TABLE `tipo_proveedor` DISABLE KEYS */;
+INSERT INTO `tipo_proveedor` VALUES (1,'Nacional'),(2,'Internacional'),(3,'Regional');
+/*!40000 ALTER TABLE `tipo_proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -508,4 +508,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-09-30 21:53:43
+-- Dump completed on 2026-10-06  4:15:39
